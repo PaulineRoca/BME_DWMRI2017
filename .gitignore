@@ -1,0 +1,7 @@
+
+# IntelliJ project files (pycharm)
+.idea
+*.iml
+
+# Ipython notebook checkpoints:
+.ipynb_checkpoints
