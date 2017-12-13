@@ -12378,8 +12378,17 @@ vector of 3 dimensions indicating gradient direction in the 3 spatial directions
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The data are in "~/BME_DWMRI/data/fsl_ftd1/subj1" (same dataset as exercise 2.).
-The following code defines data1_dirname which holds this directory.
+<p>The data are in "~/BME_DWMRI/data/fsl_fdt1/subj1".</p>
+<p>If you downloaded the data on github, you do not have this dataset yet. You need to download it from here : <a href="http://fsl.fmrib.ox.ac.uk/fslcourse/downloads/fdt.tar.gz">http://fsl.fmrib.ox.ac.uk/fslcourse/downloads/fdt.tar.gz</a>. You have to uncompress the file <code>fdt.tar.gz</code> by doing <code>tar zxf fdt.tar.gz</code> in a bash terminal. You can then copy the data of "subj1" in a new directory "fsl_fdt1" in "~/BME_DWMRI/data".</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The following code defines data1_dirname which holds this directory.
 Please execute it in order to define this directory in python:</p>
 
 </div>
@@ -15528,6 +15537,51 @@ width=600
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>N.B.: if you downloaded the data from github, you do not have the sherbrook dataset. In order to download it execute this code :</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">dipy.data</span> <span class="kn">import</span> <span class="n">fetch_sherbrooke_3shell</span>
+<span class="n">fetch_sherbrooke_3shell</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By default, the dataset is downloaded in the .dipy folder inside your home directory, in the following directory in python :</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">data_dirname</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;.dipy&#39;</span><span class="p">,</span> <span class="s1">&#39;sherbrooke_3shell&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="--5.-Local-modeling-of-the-diffusion-phenomenon"><a id="localmodeling" />  5. Local modeling of the diffusion phenomenon<a class="anchor-link" href="#--5.-Local-modeling-of-the-diffusion-phenomenon">&#182;</a></h2>
 </div>
 </div>
@@ -15610,10 +15664,17 @@ width=600
 <span class="c1"># for reconstruction with the diffusion tensor model</span>
 <span class="kn">import</span> <span class="nn">dipy.reconst.dti</span> <span class="kn">as</span> <span class="nn">dti</span>
 <span class="kn">from</span> <span class="nn">dipy.reconst.dti</span> <span class="kn">import</span> <span class="n">fractional_anisotropy</span><span class="p">,</span> <span class="n">color_fa</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span><span class="p">,</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">isdir</span>
 
 <span class="n">home</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span>
 <span class="n">standfordhardi_dirname</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span><span class="s1">&#39;BME_DWMRI&#39;</span><span class="p">,</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;stanford_hardi&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isdir</span><span class="p">(</span><span class="n">standfordhardi_dirname</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">dipy.data</span> <span class="kn">import</span> <span class="n">fetch_stanford_hardi</span>
+    <span class="n">fetch_stanford_hardi</span><span class="p">()</span>
+    <span class="n">standfordhardi_dirname</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span><span class="s1">&#39;.dipy&#39;</span><span class="p">,</span> <span class="s1">&#39;stanford_hardi&#39;</span><span class="p">)</span>
+
+    
 <span class="n">fdwi</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">standfordhardi_dirname</span><span class="p">,</span><span class="s1">&#39;HARDI150.nii.gz&#39;</span><span class="p">)</span>
 <span class="n">fbval</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">standfordhardi_dirname</span><span class="p">,</span> <span class="s1">&#39;HARDI150.bval&#39;</span><span class="p">)</span>
 <span class="n">fbvec</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">standfordhardi_dirname</span><span class="p">,</span><span class="s1">&#39;HARDI150.bvec&#39;</span><span class="p">)</span>

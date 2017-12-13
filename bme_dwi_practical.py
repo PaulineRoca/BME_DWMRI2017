@@ -166,7 +166,10 @@ print np.sqrt(4)
 
 # ### Let's look at some diffusion data in python ! :
 
-# The data are in "~/BME_DWMRI/data/fsl_ftd1/subj1" (same dataset as exercise 2.).
+# The data are in "~/BME_DWMRI/data/fsl_fdt1/subj1".
+# 
+# If you downloaded the data on github, you do not have this dataset yet. You need to download it from here : http://fsl.fmrib.ox.ac.uk/fslcourse/downloads/fdt.tar.gz. You have to uncompress the file `fdt.tar.gz` by doing `tar zxf fdt.tar.gz` in a bash terminal. You can then copy the data of "subj1" in a new directory "fsl_fdt1" in "~/BME_DWMRI/data".
+
 # The following code defines data1_dirname which holds this directory.
 # Please execute it in order to define this directory in python:
 
@@ -504,6 +507,23 @@ print bvecs[:10]
 
 # Please answer below by inserting "code cells" when using python or "markdown cells" for text
 
+# N.B.: if you downloaded the data from github, you do not have the sherbrook dataset. In order to download it execute this code :
+
+# In[ ]:
+
+
+from dipy.data import fetch_sherbrooke_3shell
+fetch_sherbrooke_3shell()
+
+
+# By default, the dataset is downloaded in the .dipy folder inside your home directory, in the following directory in python :
+
+# In[ ]:
+
+
+data_dirname = join(home, '.dipy', 'sherbrooke_3shell')
+
+
 # ## <a id='localmodeling'></a>  5. Local modeling of the diffusion phenomenon
 
 # Exemple of local modeling: the diffusion tensor model -> slide
@@ -540,10 +560,17 @@ from dipy.core.gradients import gradient_table
 # for reconstruction with the diffusion tensor model
 import dipy.reconst.dti as dti
 from dipy.reconst.dti import fractional_anisotropy, color_fa
-from os.path import expanduser, join
+from os.path import expanduser, join, isdir
 
 home = expanduser('~')
 standfordhardi_dirname = join(home,'BME_DWMRI','data','stanford_hardi')
+
+if not isdir(standfordhardi_dirname):
+    from dipy.data import fetch_stanford_hardi
+    fetch_stanford_hardi()
+    standfordhardi_dirname = join(home,'.dipy', 'stanford_hardi')
+
+    
 fdwi = join(standfordhardi_dirname,'HARDI150.nii.gz')
 fbval = join(standfordhardi_dirname, 'HARDI150.bval')
 fbvec = join(standfordhardi_dirname,'HARDI150.bvec')
